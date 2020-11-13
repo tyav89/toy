@@ -1,24 +1,16 @@
 public class Toggle {
-    private volatile boolean ofOrOn = false;
-    private int count;
+     private volatile boolean toggleStatus = false;
 
-    public  void on() {
-        if (!ofOrOn) {
-            ofOrOn = true;
-            System.out.println("ВКЛ");
-            count++;
-        }
+     public boolean getStatus() {
+          return toggleStatus;
+     }
 
-    }
+     public void on() {
+          toggleStatus = true;
+     }
 
-    public void of() {
-        if(ofOrOn){
-            ofOrOn = false;
-            System.out.println("ВЫКЛ");
-        }
-    }
+     public void off() {
+          toggleStatus = false;
 
-    public int getCount() {
-        return count;
-    }
+     }
 }

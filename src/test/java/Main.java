@@ -1,39 +1,24 @@
 public class Main {
     public static void main(String[] args) {
         Toggle toggle = new Toggle();
-        int sleep = 1000;
-        int count = 5;
 
-        Thread user = new Thread(
-                ()->{
-                    while (!Thread.currentThread().isInterrupted()){
-                        try {
-                            Thread.sleep(sleep);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        toggle.on();
-                        if(toggle.getCount() == count){
-                            Thread.currentThread().interrupt();
-                        }
-                    }
-                }
-                );
+        User user = new User(toggle);
+        Toy toy = new Toy(toggle);
 
-        Thread toy = new Thread(
-                ()->{
-                    while (!Thread.currentThread().isInterrupted()){
-                        toggle.of();
-                        if(!user.isAlive()){
-                            Thread.currentThread().interrupt();
-                        }
-                    }
-                }
-        );
+        Thread threadToy = new Thread(toy);
+        Thread threadUser = new Thread(user);
 
-        user.start();
-        toy.start();
+        threadUser.start();
+        threadToy.start();
 
+        try {
+            threadUser.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(!threadUser.isAlive()) {
+            threadToy.interrupt();
+        }
 
     }
 }
