@@ -9,9 +9,8 @@ public class User implements Runnable {
 
     @Override
     public void run() {
-
-        if (!toggle.getStatus()) {
-            for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count;) {
+            if (!toggle.getStatus()) {
                 try {
                     Thread.sleep(sleep);
                 } catch (InterruptedException e) {
@@ -19,7 +18,7 @@ public class User implements Runnable {
                 }
                 toggle.on();
                 System.out.println("ВКЛ");
-
+                i++;
             }
         }
     }
